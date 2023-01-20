@@ -17,22 +17,14 @@ public class Main {
             } else if (userInput == 2) {
                 manager.getYearlyReport();
                 System.out.println("Годовой отчет считан");
-            } else if (userInput == 3) {
+            } else if (userInput == 3) { //ИЗБАВИЛИСЬ ОТ ЛИШНИХ IF/ELSE
                 if (manager.verificationMonthlyIncome().isEmpty() && manager.verificationMonthlyExpense().isEmpty()) {
                     System.out.println("Операция успешно завершена, несоответствий невыявлено");
-                } else if (!manager.verificationMonthlyIncome().isEmpty() && manager.verificationMonthlyExpense().isEmpty()) {
+                } else if (!manager.verificationMonthlyIncome().isEmpty()) {
                     for (Integer income : manager.verificationMonthlyIncome()) {
                         System.out.println("Обнаружено несоответствие в доходах в месяце: " + income);
                     }
-                    System.out.println(manager.verificationMonthlyIncome());
-                } else if (manager.verificationMonthlyIncome().isEmpty() && !manager.verificationMonthlyExpense().isEmpty()) {
-                    for (Integer expense : manager.verificationMonthlyExpense()) {
-                        System.out.println("Обнаружено несоответствие в расходах в месяце: " + expense);
-                    }
-                } else {
-                    for (Integer income : manager.verificationMonthlyIncome()) {
-                        System.out.println("Обнаружено несоответствие в доходах в месяце: " + income);
-                    }
+                } else if (!manager.verificationMonthlyExpense().isEmpty()) {
                     for (Integer expense : manager.verificationMonthlyExpense()) {
                         System.out.println("Обнаружено несоответствие в расходах в месяце: " + expense);
                     }

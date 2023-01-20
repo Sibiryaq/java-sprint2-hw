@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MonthlyReport {
     MonthlyReport() {
@@ -18,7 +19,8 @@ public class MonthlyReport {
     public void constructMonthlyReader(int monthNumber, MonthlyReport monthlyReport) {
 
         String fileName = "resources/m.20210" + monthNumber + ".csv";
-        String contentOfFile = readFileContentsOrNull(fileName);
+        String contentOfFile = Reader.readFileContentsOrNull(fileName);
+        assert contentOfFile != null; //Тут нужно проверить на null, так как у тебя метод readFileContentsOrNull может вернуть null
         String[] lines = contentOfFile.split("\r?\n");
 
         for (int i = 1; i < lines.length; i++) {
@@ -35,18 +37,9 @@ public class MonthlyReport {
         }
     }
 
-    public String readFileContentsOrNull(String path) { //передали на вход путь к файлу, а он нам даст его содержимое
-        try {
-            return Files.readString(Path.of(path));
-        } catch (IOException e) {
-            System.out.println("Невозможно прочитать файл с месячным отчётом. Возможно файл не находится в нужной директории.");
-            return null;
-        }
-    }
-
-    public HashMap monthlyIncome(){  //список общих доходов по каждому из месяцев
-        HashMap<Integer, Integer> monthlyIncome = new HashMap<>();
-        for(int i=1;i<=monthsConverting.countMonth;i++) {
+    public Map monthlyIncome(){  //(возвращать интерфейс с дженериком Map<Integer, Integer>)список общих доходов по каждому из месяцев
+        Map<Integer, Integer> monthlyIncome = new HashMap<>();
+        for(int i=1;i<=MonthsConverting.countMonth;i++) {
             int sumMonthlyIncome = 0;
             for(Monthly monthly: monthlyRecords) {
                 if (!monthly.isExpense && monthly.monthNumber == i) {
@@ -58,9 +51,9 @@ public class MonthlyReport {
         return monthlyIncome;
     }
 
-    public HashMap monthlyExpense(){ //список общих расходов по каждому из месяцев
-        HashMap <Integer, Integer> monthlyExpense = new HashMap<>();
-        for(int i=1;i<=monthsConverting.countMonth;i++) {
+    public Map monthlyExpense(){ //(Аналогично в monthlyExpense)список общих расходов по каждому из месяцев
+        Map <Integer, Integer> monthlyExpense = new HashMap<>();
+        for(int i=1;i<=MonthsConverting.countMonth;i++) {
             int sumMonthlyExpense = 0;
             for(Monthly monthly: monthlyRecords) {
                 if (monthly.isExpense && monthly.monthNumber == i) {
@@ -81,7 +74,7 @@ public class MonthlyReport {
     public ArrayList<ArrayList<String>> getMonthlyReports() {
         ArrayList<String> consistMonthlyReport = new ArrayList<>();
         ArrayList<ArrayList<String>> consistMonthlyReports = new ArrayList<>();
-        for(int i=1;i<=monthsConverting.countMonth;i++) {
+        for(int i = 1; i<= MonthsConverting.countMonth; i++) {
             int maxMonthlyIncome = 0;
             int monthlyIncome = 0;
             String maxItemNameIncome = "";

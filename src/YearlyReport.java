@@ -12,7 +12,9 @@ public class YearlyReport {
 
     public void constructYearlyReader(String fileName, YearlyReport yearlyReport) {
 
-        String contentOfFile = readFileContentsOrNull(fileName);
+
+        String contentOfFile = Reader.readFileContentsOrNull(fileName);
+        assert contentOfFile != null; //Тут нужно проверить на null, так как у тебя метод readFileContentsOrNull может вернуть null
         String[] lines = contentOfFile.split("\r?\n");
 
         for (int i = 1; i < lines.length; i++) {
@@ -27,15 +29,6 @@ public class YearlyReport {
 
         }
     }
-    public static String readFileContentsOrNull(String path) //передали на вход путь к файлу, а он нам даст его содержимое
-    {
-        try {
-            return Files.readString(Path.of(path));
-        } catch (IOException e) {
-            System.out.println("Невозможно прочитать файл с отчётом. Возможно, файл не находится в нужной директории.");
-            return null;
-        }
-    }
 
     YearlyReport() {
         this.YearlyRecords = new ArrayList<>();
@@ -48,7 +41,7 @@ public class YearlyReport {
     public HashMap yearlyIncome(){
         HashMap <Integer, Integer> yearlyIncome = new HashMap<>();
         for(Yearly yearly: YearlyRecords) {
-            if(yearly.isExpense == false) {
+            if(!yearly.isExpense) {
                 yearlyIncome.put(yearly.monthNumber,yearly.amount);
             }
         }
@@ -56,9 +49,9 @@ public class YearlyReport {
     }
 
     public HashMap yearlyExpense(){
-        HashMap <Integer, Integer> yearlyExpense = new HashMap();
+        HashMap <Integer, Integer> yearlyExpense = new HashMap<>();
         for(Yearly yearly: YearlyRecords) {
-            if(yearly.isExpense == true) {
+            if(yearly.isExpense) {
                 yearlyExpense.put(yearly.monthNumber,yearly.amount);
             }
         }
@@ -75,13 +68,13 @@ public class YearlyReport {
     public ArrayList<ArrayList<String>> monthlyProfit() {
         ArrayList<String> consistMonthlyProfit= new ArrayList<>();
         ArrayList<ArrayList<String>> consistMonthlyProfits = new ArrayList<>();
-        for(int i=1; i<=monthsConverting.countMonth; i++) {
+        for(int i = 1; i<= MonthsConverting.countMonth; i++) {
             int monthlyIncome = 0;
             int monthlyExpense = 0;
             for(Yearly yearly: YearlyRecords) {
-                if(yearly.monthNumber == i && yearly.isExpense == false) {
+                if((yearly.monthNumber == i) && !yearly.isExpense) {
                     monthlyIncome += yearly.amount;
-                } else if(yearly.monthNumber == i && yearly.isExpense == true) {
+                } else if(yearly.monthNumber == i) {
                     monthlyExpense += yearly.amount;
                 }
             }
@@ -97,7 +90,7 @@ public class YearlyReport {
         int avgYearlyIncome = 0;
         int k = 0;
         for(Yearly yearly: YearlyRecords) {
-            if(yearly.isExpense == false) {
+            if(!yearly.isExpense) {
                 sumYearlyIncome += yearly.amount;
                 k+=1;
             }
@@ -110,7 +103,7 @@ public class YearlyReport {
         int avgYearlyExpense = 0;
         int k = 0;
         for(Yearly yearly: YearlyRecords) {
-            if(yearly.isExpense == true) {
+            if(yearly.isExpense) {
                 sumYearlyExpense += yearly.amount;
                 k+=1;
             }
