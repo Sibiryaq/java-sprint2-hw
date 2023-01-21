@@ -1,10 +1,14 @@
 public class MonthsConverting {
     static int countMonth = 3;
-    public String getMonth(int monthNumber){
+
+    public String getMonth(int monthNumber) {
         switch (monthNumber) {
-            case(1): return "Январь";
-            case(2): return "Февраль";
-            case(3): return "Март";
+            case (1):
+                return "Январь";
+            case (2):
+                return "Февраль";
+            case (3):
+                return "Март";
             default:
                 return "Такого месяца не было в ТЗ";
         }

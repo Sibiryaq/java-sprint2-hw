@@ -14,27 +14,33 @@ public class Manager {
             monthlyReport.constructMonthlyReader(monthNumber, monthlyReport);
         }
     }
+
     //верификация
     public void getYearlyReport() {
         yearlyReport.constructYearlyReader("resources/y.2021.csv", yearlyReport);
     }
-    public List<Integer> verificationMonthlyIncome(){
+
+    public List<Integer> verificationMonthlyIncome() {
         return verificationReports.verificationIncome(monthlyReport, yearlyReport);
     }
-    public List<Integer> verificationMonthlyExpense(){
+
+    public List<Integer> verificationMonthlyExpense() {
         return verificationReports.verificationExpense(monthlyReport, yearlyReport);
     }
 
     public ArrayList<ArrayList<String>> getMonthlyReports() {  // месячная статистика
         return monthlyReport.getMonthlyReports();
     }
+
     //годовая статистика
     public ArrayList<ArrayList<String>> getMonthlyProfit() {
         return yearlyReport.monthlyProfit();
     }
+
     public int getYearlyIncomeAVG() {
         return yearlyReport.getYearlyIncomeAVG();
     }
+
     public int getYearlyExpenseAVG() {
         return yearlyReport.getYearlyExpenseAVG();
     }
