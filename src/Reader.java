@@ -1,14 +1,16 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
+import java.util.List;
 
-public class Reader { // ВЫНЕС МЕТОД В ОТДЕЛЬНЫЙ КЛАСС, Т.К. РАНЕЕ ОН НАХОДИЛСЯ В ДВУХ КЛАССАХ
-    public static String readFileContentsOrNull(String path) {
+public class Reader {
+    List<String> readFile(String path) {
         try {
-            return Files.readString(Path.of(path));
+            return Files.readAllLines(Path.of(path));
         } catch (IOException e) {
             System.out.println("Невозможно прочитать файл с отчётом. Возможно, файл не находится в нужной директории.");
-            return null;
+            return Collections.emptyList();
         }
     }
 }
